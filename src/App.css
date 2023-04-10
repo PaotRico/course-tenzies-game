@@ -1,0 +1,63 @@
+* {
+    font-family: "karla", "sans-serif";
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    color: #0B2434;
+}
+
+html {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main {
+    background-color: #0B2434;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 360px;
+    height: 380px;
+}
+
+.game-space {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F5F5F5;
+    width: 320px;
+    height: 320px;
+    border-radius: 10px;
+}
+
+h1 {
+    padding-top: 30px;
+}
+
+.game-space > p {
+    width: 230px;
+    font-family: "Inter", "sans-serif";
+    font-weight: 400;
+    font-size: 13px;
+    text-align: center;
+    color: #4A4E74;
+    padding-bottom: 20px;
+}
+
+.die {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+}
+
+.dice {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 20px;
+}
