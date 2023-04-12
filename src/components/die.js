@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function die() {
-  return <div className="die">1</div>;
+export default function die(prop) {
+  return <div className="die">{prop.value}</div>;
 }
