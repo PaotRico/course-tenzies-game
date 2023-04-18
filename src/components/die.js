@@ -1,5 +1,10 @@
 import React from "react";
 
 export default function die(prop) {
-  return <div className="die">{prop.value}</div>;
+  const classNames = ["die", prop.held ? "held" : ""].join(" ");
+  return (
+    <div className={classNames} onClick={prop.holdDice}>
+      {prop.value}
+    </div>
+  );
 }

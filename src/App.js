@@ -1,20 +1,54 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import Die from "./components/die.js";
+import { nanoid } from "nanoid";
 
 function App() {
   function allNewDice() {
     const diceValue = [];
     for (let i = 0; i < 10; i++) {
-      diceValue.push({ value: Math.ceil(Math.random() * 6), isHeld: false });
+      diceValue.push({
+        value: Math.ceil(Math.random() * 6),
+        isHeld: false,
+        id: nanoid(),
+      });
     }
     return diceValue;
   }
 
-  const [allDice, setAllDice] = React.useState(() => allNewDice());
+  const [dice, setDice] = React.useState(() => allNewDice());
+  const [tenzies, setTenzies] = React.useState(() => false);
 
-  function rollDice() {
-    setAllDice(allNewDice());
+  useEffect(() => {
+    const allHeld = dice.every((die) => die.isHeld);
+    const allValue = dice.every((die) => die.value === dice[0].value);
+    if (allHeld && allValue) {
+      console.log("Victory");
+      setTenzies(true);
+    }
+  }, [dice]);
+
+  const rollDice = () => {
+    if (!tenzies) {
+      setDice((oldDice) =>
+        oldDice.map((die) => {
+          return die.isHeld === false
+            ? { ...die, value: Math.ceil(Math.random() * 6) }
+            : die;
+        })
+      );
+    } else {
+      setTenzies(false);
+      setDice(allNewDice());
+    }
+  };
+
+  function holdDice(id) {
+    setDice((oldDice) =>
+      oldDice.map((die) => {
+        return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
+      })
+    );
   }
 
   return (
@@ -26,11 +60,16 @@ function App() {
           current value between rolls.
         </p>
         <div className="dice-container">
-          {allDice.map((die) => (
-            <Die value={die.value} />
+          {dice.map((die) => (
+            <Die
+              value={die.value}
+              key={die.id}
+              held={die.isHeld}
+              holdDice={() => holdDice(die.id)}
+            />
           ))}
         </div>
-        <button onClick={rollDice}>Roll</button>
+        <button onClick={rollDice}>{tenzies ? "New game" : "Roll"}</button>
       </div>
     </main>
   );
